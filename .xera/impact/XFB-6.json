@@ -1,0 +1,9 @@
+{
+  "targetTicket": "XFB-6",
+  "modifiedAreas": [
+    "register",
+    "dashboard"
+  ],
+  "scenarios": [],
+  "generatedAt": "2026-05-19T15:49:35.086Z"
+}
