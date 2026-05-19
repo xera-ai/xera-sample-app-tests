@@ -1,0 +1,55 @@
+{
+  "runId": "2026-05-19T18-03-26-147",
+  "scenarios": [
+    {
+      "name": "Overview shows three statistics: Total Tasks, In Progress, and Completed",
+      "outcome": "PASS",
+      "class": "PASS",
+      "confidence": "high",
+      "rationale": "All three labelled statistic paragraphs (Total Tasks, In Progress, Completed) rendered on the Dashboard."
+    },
+    {
+      "name": "Each statistic displays a numeric value",
+      "outcome": "PASS",
+      "class": "PASS",
+      "confidence": "high",
+      "rationale": "Total Tasks = 50, In Progress = 16, Completed = 17 — all non-negative integers parsed from the visible text."
+    },
+    {
+      "name": "Recent tasks list shows at most 5 items",
+      "outcome": "PASS",
+      "class": "PASS",
+      "confidence": "high",
+      "rationale": "Recent Tasks table renders 5 rows in tbody — exactly the AC's upper bound."
+    },
+    {
+      "name": "Each recent task row shows Status, Priority, and creation date",
+      "outcome": "PASS",
+      "class": "PASS",
+      "confidence": "high",
+      "rationale": "Every row's text matched the Status / Priority / date regexes (e.g. 'Done High May 19, 2026', 'In Progress Medium May 19, 2026')."
+    },
+    {
+      "name": "Clicking a recent task opens its detail page",
+      "outcome": "PASS",
+      "class": "PASS",
+      "confidence": "high",
+      "rationale": "Clicking the title link in the first row navigated to /tasks/task-1."
+    },
+    {
+      "name": "\"View all\" link navigates to the full tasks list",
+      "outcome": "FAIL",
+      "class": "REAL_BUG",
+      "confidence": "high",
+      "rationale": "AC-3 says the View all link should lead to all the user's tasks. The implementation links to /projects/project-1 — a single project's task list, not a global view. Users in multiple projects will only see tasks from project-1, missing tasks from other projects. The link target violates the AC."
+    },
+    {
+      "name": "Statistics count only tasks from projects the user belongs to",
+      "outcome": "FAIL",
+      "class": "REAL_BUG",
+      "confidence": "high",
+      "rationale": "The Dashboard's Total Tasks figure (50) does not equal the count returned by the user-scoped tasks API (60). The discrepancy means either (a) the Dashboard count excludes 10 tasks from projects the user actually belongs to, or (b) the API includes 10 tasks the Dashboard correctly filters out. Either way AC-4 ('Figures only count tasks in projects the user belongs to') is not consistently honoured — the two sources disagree on user scope, which is a bug in at least one of them."
+    }
+  ],
+  "scenarioCounts": { "total": 7, "passed": 5, "failed": 2, "skipped": 0 }
+}

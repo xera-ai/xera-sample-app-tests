@@ -1,0 +1,8 @@
+{"ts":"2026-05-19T17:57:48.539Z","step":"exec.start","runId":"2026-05-19T17-57-48-044","env":"staging","baseURL":"http://localhost:5173"}
+{"ts":"2026-05-19T17:58:43.346Z","step":"exec.done","runId":"2026-05-19T17-57-48-044","exit":1,"ms":55302}
+{"ts":"2026-05-19T17:59:12.259Z","step":"exec.start","runId":"2026-05-19T17-59-11-910","env":"staging","baseURL":"http://localhost:5173"}
+{"ts":"2026-05-19T18:00:31.984Z","step":"exec.done","runId":"2026-05-19T17-59-11-910","exit":1,"ms":80073}
+{"ts":"2026-05-19T18:02:22.860Z","step":"exec.start","runId":"2026-05-19T18-02-22-517","env":"staging","baseURL":"http://localhost:5173"}
+{"ts":"2026-05-19T18:02:35.615Z","step":"exec.done","runId":"2026-05-19T18-02-22-517","exit":1,"ms":13098}
+{"ts":"2026-05-19T18:03:26.494Z","step":"exec.start","runId":"2026-05-19T18-03-26-147","env":"staging","baseURL":"http://localhost:5173"}
+{"ts":"2026-05-19T18:03:37.973Z","step":"exec.done","runId":"2026-05-19T18-03-26-147","exit":1,"ms":11826}

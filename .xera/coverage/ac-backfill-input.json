@@ -1,39 +1,50 @@
 {
   "tickets": [
     {
-      "id": "XFB-8",
-      "summary": "US-103 — Log Out",
+      "id": "XFB-26",
+      "summary": "US-502 — Overview Dashboard",
       "acs": [
-        "\"Sign out\" button is always visible in the navigation bar",
-        "After logging out, redirect to the login page",
-        "Refresh token is immediately invalidated",
-        "Old access tokens cannot be reused after logout"
+        "Displays 3 statistics: Total Tasks, In Progress, Completed",
+        "List of 5 most recent tasks with Status, Priority, and creation date",
+        "Tasks can be clicked to open task detail",
+        "\"View all\" link to see all tasks",
+        "Figures only count tasks in projects the user belongs to"
       ],
       "scenarios": [
         {
-          "id": "a48afd8ea22341ac1831aac69d426663dfe2904d",
-          "name": "Sign-out button is visible in the navigation bar on the Dashboard",
-          "gherkin": "  Scenario: Sign-out button is visible in the navigation bar on the Dashboard\n    When I am on the Dashboard page\n    Then I should see a \"Sign out\" button in the navigation bar\n"
+          "id": "367e64d430f305ef82795eda8907f0c3877e2807",
+          "name": "Overview shows three statistics: Total Tasks, In Progress, and Completed",
+          "gherkin": "  Scenario: Overview shows three statistics: Total Tasks, In Progress, and Completed\n    Then I should see a statistic labelled \"Total Tasks\"\n    And I should see a statistic labelled \"In Progress\"\n    And I should see a statistic labelled \"Completed\"\n"
         },
         {
-          "id": "5be0314336113f1e2122e54961e68025d4cbde90",
-          "name": "Sign-out button is visible on a non-Dashboard authenticated page",
-          "gherkin": "  Scenario: Sign-out button is visible on a non-Dashboard authenticated page\n    When I navigate to my profile page\n    Then I should see a \"Sign out\" button in the navigation bar\n"
+          "id": "6761a7808fd1942aab4a12248036c7202ac25eaa",
+          "name": "Each statistic displays a numeric value",
+          "gherkin": "  Scenario: Each statistic displays a numeric value\n    Then the \"Total Tasks\" statistic should display a non-negative integer\n    And the \"In Progress\" statistic should display a non-negative integer\n    And the \"Completed\" statistic should display a non-negative integer\n"
         },
         {
-          "id": "6fc8a0c0161faddc26188945b244d6a038e7f43f",
-          "name": "Clicking Sign out redirects to the login page",
-          "gherkin": "  Scenario: Clicking Sign out redirects to the login page\n    Given I am on the Dashboard page\n    When I click the \"Sign out\" button\n    Then I should be redirected to the login page\n\n  # Note: AC \"Refresh token is immediately invalidated\" is asserted by calling\n  # POST /auth/refresh with the captured refresh_token after logout and\n  # expecting a 4xx response. The Gherkin keeps the step user-facing."
+          "id": "92133f73388b9e407e05a6711a9951ae02eef80a",
+          "name": "Recent tasks list shows at most 5 items",
+          "gherkin": "  Scenario: Recent tasks list shows at most 5 items\n    Then I should see a \"Recent tasks\" section\n    And the section should list at most 5 tasks\n"
         },
         {
-          "id": "b6eac61942185e29a1d5b1ffb9744f57d21f4751",
-          "name": "Refresh token is invalidated immediately after logout",
-          "gherkin": "  Scenario: Refresh token is invalidated immediately after logout\n    Given I have captured my refresh token\n    When I click the \"Sign out\" button\n    And I attempt to refresh the access token using the captured refresh token\n    Then the refresh attempt should be rejected\n\n  # Note: AC \"Old access tokens cannot be reused after logout\" is asserted by\n  # calling an authenticated endpoint with the pre-logout access token and\n  # expecting 401."
+          "id": "8ae91e24f5c100895de92c7bbde02f8314e625b8",
+          "name": "Each recent task row shows Status, Priority, and creation date",
+          "gherkin": "  Scenario: Each recent task row shows Status, Priority, and creation date\n    Then every recent task row should display a Status\n    And every recent task row should display a Priority\n    And every recent task row should display a creation date\n"
         },
         {
-          "id": "0ad410fc42c316386cd92992bf72043fb05c21b9",
-          "name": "Old access token cannot be reused after logout",
-          "gherkin": "  Scenario: Old access token cannot be reused after logout\n    Given I have captured my access token\n    When I click the \"Sign out\" button\n    And I call an authenticated endpoint with the captured access token\n    Then the response status should be 401\n"
+          "id": "959d20c013e88c2b0b03335b03336bb2140bf0e2",
+          "name": "Clicking a recent task opens its detail page",
+          "gherkin": "  Scenario: Clicking a recent task opens its detail page\n    Given the recent tasks list is not empty\n    When I click the first recent task\n    Then I should be navigated to the task's detail page\n"
+        },
+        {
+          "id": "9649b8ce4246ca395e399cc27c0ac689016d30ca",
+          "name": "\"View all\" link navigates to the full tasks list",
+          "gherkin": "  Scenario: \"View all\" link navigates to the full tasks list\n    When I click the \"View all\" link\n    Then I should be navigated to the all-tasks page\n\n  # Note: AC \"Figures only count tasks in projects the user belongs to\" is asserted\n  # by comparing the Total Tasks figure in the UI against the count returned by\n  # GET /api/v1/tasks for the same authenticated user (which the backend already\n  # scopes to projects the user belongs to)."
+        },
+        {
+          "id": "629d1eb5ed79a4eeefe3de7806cf78bee835ce79",
+          "name": "Statistics count only tasks from projects the user belongs to",
+          "gherkin": "  Scenario: Statistics count only tasks from projects the user belongs to\n    Given I capture the count of tasks returned by the tasks API for the current user\n    Then the \"Total Tasks\" statistic should equal the captured count\n"
         }
       ]
     }
