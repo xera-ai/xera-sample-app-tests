@@ -1,57 +1,51 @@
 {
   "tickets": [
     {
-      "id": "XFB-7",
-      "summary": "US-102 — Log In",
+      "id": "XFB-6",
+      "summary": "US-101 — Register an Account",
       "acs": [
-        "Form has Email and Password fields",
-        "Successful login → redirect to Dashboard",
-        "Invalid credentials → display \"Invalid credentials\" error (401)",
-        "Session is persisted after page reload",
-        "After 15 minutes of inactivity, the access token is automatically refreshed",
-        "Rate limit: blocked after 20 failed attempts per minute (429)",
+        "Form has 3 fields: Name, Email, Password (≥8 characters)",
+        "Email must be valid and not already registered in the system",
+        "After successful registration, automatically log in and redirect to Dashboard",
+        "Display a clear error if the email is already taken (409)",
+        "Display an error if the password is fewer than 8 characters (400)",
         "Layout: 2-panel design — dark branding panel (left) + form panel (right). On mobile (<768px), branding panel collapses; form takes full width."
       ],
       "scenarios": [
         {
-          "id": "8d317934220ea3d06648daa2c47dfdde5eafbf58",
-          "name": "Login form displays Email and Password fields",
-          "gherkin": "  Scenario: Login form displays Email and Password fields\n    Then I should see an \"Email\" input field\n    And I should see a \"Password\" input field\n    And I should see a \"Sign in\" button\n"
+          "id": "70444a3e98b252806b16de10f3a5ac599ed1eefa",
+          "name": "Registration form displays Name, Email, and Password fields",
+          "gherkin": "  Scenario: Registration form displays Name, Email, and Password fields\n    Then I should see a \"Name\" input field\n    And I should see an \"Email\" input field\n    And I should see a \"Password\" input field\n    And I should see a \"Create account\" button\n"
         },
         {
-          "id": "f118e530a84006bf480b17e2e8d080e464dd5bb0",
-          "name": "Successful login redirects to Dashboard",
-          "gherkin": "  Scenario: Successful login redirects to Dashboard\n    Given a user with email \"alice@example.com\" and password \"Secret123!\" is registered\n    When I enter \"alice@example.com\" into the \"Email\" field\n    And I enter \"Secret123!\" into the \"Password\" field\n    And I click the \"Sign in\" button\n    Then I should be redirected to the Dashboard page\n"
+          "id": "27cadf2b24b27ab08a9d64e7360f16e1924712ef",
+          "name": "Successful registration logs the user in and redirects to Dashboard",
+          "gherkin": "  Scenario: Successful registration logs the user in and redirects to Dashboard\n    When I enter \"Alice Example\" into the \"Name\" field\n    And I enter \"alice.new@example.com\" into the \"Email\" field\n    And I enter \"Secret123!\" into the \"Password\" field\n    And I click the \"Create account\" button\n    Then I should be redirected to the Dashboard page\n    And I should be authenticated\n"
         },
         {
-          "id": "0198092f532221c55737ef6f0f3b5a6507f14704",
-          "name": "Invalid credentials display an error message",
-          "gherkin": "  Scenario: Invalid credentials display an error message\n    When I enter \"alice@example.com\" into the \"Email\" field\n    And I enter \"WrongPassword!\" into the \"Password\" field\n    And I click the \"Sign in\" button\n    Then I should see the error \"Invalid credentials\"\n    And I should remain on the login page\n"
+          "id": "d4706b9bcc6412efbb4a2979c409e00dea229427",
+          "name": "Duplicate email shows a clear error",
+          "gherkin": "  Scenario: Duplicate email shows a clear error\n    Given a user with email \"alice@example.com\" is already registered\n    When I enter \"Alice Example\" into the \"Name\" field\n    And I enter \"alice@example.com\" into the \"Email\" field\n    And I enter \"Secret123!\" into the \"Password\" field\n    And I click the \"Create account\" button\n    Then I should see the error \"Email is already taken\"\n    And the response status should be 409\n    And I should remain on the registration page\n"
         },
         {
-          "id": "f03b982e62f57be53e64aadc23d32bd52539c44f",
-          "name": "Session is persisted after a page reload",
-          "gherkin": "  Scenario: Session is persisted after a page reload\n    Given a user with email \"alice@example.com\" and password \"Secret123!\" is registered\n    And I have logged in as \"alice@example.com\" with password \"Secret123!\"\n    When I reload the page\n    Then I should still be authenticated\n    And I should be on the Dashboard page\n\n  # Note: Token-refresh after 15 minutes of inactivity is exercised by advancing the\n  # virtual clock or by directly invoking the refresh endpoint; the test relies on\n  # time-mocking rather than waiting 15 real minutes."
+          "id": "2d996542e7ffe3ead0707d7977e7abd48e2d5109",
+          "name": "Password shorter than 8 characters shows an error",
+          "gherkin": "  Scenario: Password shorter than 8 characters shows an error\n    When I enter \"Alice Example\" into the \"Name\" field\n    And I enter \"alice.short@example.com\" into the \"Email\" field\n    And I enter \"Short1!\" into the \"Password\" field\n    And I click the \"Create account\" button\n    Then I should see an error indicating the password must be at least 8 characters\n    And the response status should be 400\n    And I should remain on the registration page\n"
         },
         {
-          "id": "978aef2b0177c8df7aab859ab1ee70d95fa5f678",
-          "name": "Access token is automatically refreshed after 15 minutes of inactivity",
-          "gherkin": "  Scenario: Access token is automatically refreshed after 15 minutes of inactivity\n    Given I have logged in as \"alice@example.com\" with password \"Secret123!\"\n    When 15 minutes of inactivity have passed\n    And I perform an authenticated action\n    Then the access token should have been refreshed\n    And I should remain on the Dashboard page\n"
+          "id": "bd911645a4a5d51d8c5671ed27971c9aec0c94fc",
+          "name": "Invalid email format shows an error",
+          "gherkin": "  Scenario: Invalid email format shows an error\n    When I enter \"Alice Example\" into the \"Name\" field\n    And I enter \"not-an-email\" into the \"Email\" field\n    And I enter \"Secret123!\" into the \"Password\" field\n    And I click the \"Create account\" button\n    Then I should see an error indicating the email is invalid\n    And I should remain on the registration page\n"
         },
         {
-          "id": "52e04b6bcc7e0fe629d2f23a02c9714462b4cf5d",
-          "name": "Rate limit blocks after 20 failed login attempts in one minute",
-          "gherkin": "  Scenario: Rate limit blocks after 20 failed login attempts in one minute\n    When I submit invalid credentials 20 times within one minute\n    And I submit invalid credentials one more time\n    Then I should see a rate-limit error\n    And the response status should be 429\n"
-        },
-        {
-          "id": "6883194bcec518e5113251d79e17250a2db3e71b",
+          "id": "ebaf223cf1f46415a43d1c5cd429d4cd6842796c",
           "name": "Desktop layout shows the 2-panel design",
-          "gherkin": "  Scenario: Desktop layout shows the 2-panel design\n    Given my viewport is 1280 by 800 pixels\n    Then I should see the dark branding panel on the left\n    And I should see the login form panel on the right\n"
+          "gherkin": "  Scenario: Desktop layout shows the 2-panel design\n    Given my viewport is 1280 by 800 pixels\n    Then I should see the dark branding panel on the left\n    And I should see the registration form panel on the right\n"
         },
         {
-          "id": "955a1c6c40cde5fe02535a4c00636e119cd5c44b",
+          "id": "01a639c4acf0b5bbf9ad44e54df91af88727d33b",
           "name": "Mobile layout collapses the branding panel",
-          "gherkin": "  Scenario: Mobile layout collapses the branding panel\n    Given my viewport is 375 by 812 pixels\n    Then the branding panel should be hidden\n    And the login form should occupy the full width\n"
+          "gherkin": "  Scenario: Mobile layout collapses the branding panel\n    Given my viewport is 375 by 812 pixels\n    Then the branding panel should be hidden\n    And the registration form should occupy the full width\n"
         }
       ]
     }
