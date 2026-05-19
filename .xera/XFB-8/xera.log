@@ -1,0 +1,6 @@
+{"ts":"2026-05-19T16:33:32.866Z","step":"exec.start","runId":"2026-05-19T16-33-32-414","env":"staging","baseURL":"http://localhost:5173"}
+{"ts":"2026-05-19T16:33:42.069Z","step":"exec.done","runId":"2026-05-19T16-33-32-414","exit":1,"ms":9654}
+{"ts":"2026-05-19T16:47:18.197Z","step":"exec.start","runId":"2026-05-19T16-47-17-870","env":"staging","baseURL":"http://localhost:5173"}
+{"ts":"2026-05-19T16:49:08.692Z","step":"exec.done","runId":"2026-05-19T16-47-17-870","exit":1,"ms":110822}
+{"ts":"2026-05-19T16:50:10.489Z","step":"exec.start","runId":"2026-05-19T16-50-10-160","env":"staging","baseURL":"http://localhost:5173"}
+{"ts":"2026-05-19T16:50:20.813Z","step":"exec.done","runId":"2026-05-19T16-50-10-160","exit":1,"ms":10652}

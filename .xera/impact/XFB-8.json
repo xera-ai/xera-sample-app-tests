@@ -1,0 +1,162 @@
+{
+  "targetTicket": "XFB-8",
+  "modifiedAreas": [
+    "logout",
+    "login"
+  ],
+  "scenarios": [
+    {
+      "scenarioId": "8d317934220ea3d06648daa2c47dfdde5eafbf58",
+      "ticketId": "XFB-7",
+      "name": "Login form displays Email and Password fields",
+      "priority": "p0",
+      "edgePath": [
+        {
+          "kind": "modifies",
+          "from": "XFB-8",
+          "to": "logout"
+        },
+        {
+          "kind": "uses",
+          "from": "8d317934220ea3d06648daa2c47dfdde5eafbf58",
+          "to": "f3ceb974014221075f6a00f7c950120af7642d01"
+        }
+      ],
+      "riskScore": 14
+    },
+    {
+      "scenarioId": "f118e530a84006bf480b17e2e8d080e464dd5bb0",
+      "ticketId": "XFB-7",
+      "name": "Successful login redirects to Dashboard",
+      "priority": "p0",
+      "edgePath": [
+        {
+          "kind": "modifies",
+          "from": "XFB-8",
+          "to": "logout"
+        },
+        {
+          "kind": "uses",
+          "from": "f118e530a84006bf480b17e2e8d080e464dd5bb0",
+          "to": "f3ceb974014221075f6a00f7c950120af7642d01"
+        }
+      ],
+      "riskScore": 14
+    },
+    {
+      "scenarioId": "f03b982e62f57be53e64aadc23d32bd52539c44f",
+      "ticketId": "XFB-7",
+      "name": "Session is persisted after a page reload",
+      "priority": "p0",
+      "edgePath": [
+        {
+          "kind": "modifies",
+          "from": "XFB-8",
+          "to": "logout"
+        },
+        {
+          "kind": "uses",
+          "from": "f03b982e62f57be53e64aadc23d32bd52539c44f",
+          "to": "f3ceb974014221075f6a00f7c950120af7642d01"
+        }
+      ],
+      "riskScore": 14
+    },
+    {
+      "scenarioId": "978aef2b0177c8df7aab859ab1ee70d95fa5f678",
+      "ticketId": "XFB-7",
+      "name": "Access token is automatically refreshed after 15 minutes of inactivity",
+      "priority": "p0",
+      "edgePath": [
+        {
+          "kind": "modifies",
+          "from": "XFB-8",
+          "to": "logout"
+        },
+        {
+          "kind": "uses",
+          "from": "978aef2b0177c8df7aab859ab1ee70d95fa5f678",
+          "to": "f3ceb974014221075f6a00f7c950120af7642d01"
+        }
+      ],
+      "riskScore": 14
+    },
+    {
+      "scenarioId": "52e04b6bcc7e0fe629d2f23a02c9714462b4cf5d",
+      "ticketId": "XFB-7",
+      "name": "Rate limit blocks after 20 failed login attempts in one minute",
+      "priority": "p0",
+      "edgePath": [
+        {
+          "kind": "modifies",
+          "from": "XFB-8",
+          "to": "logout"
+        },
+        {
+          "kind": "uses",
+          "from": "52e04b6bcc7e0fe629d2f23a02c9714462b4cf5d",
+          "to": "f3ceb974014221075f6a00f7c950120af7642d01"
+        }
+      ],
+      "riskScore": 13.992042077546296
+    },
+    {
+      "scenarioId": "6883194bcec518e5113251d79e17250a2db3e71b",
+      "ticketId": "XFB-7",
+      "name": "Desktop layout shows the 2-panel design",
+      "priority": "p0",
+      "edgePath": [
+        {
+          "kind": "modifies",
+          "from": "XFB-8",
+          "to": "logout"
+        },
+        {
+          "kind": "uses",
+          "from": "6883194bcec518e5113251d79e17250a2db3e71b",
+          "to": "f3ceb974014221075f6a00f7c950120af7642d01"
+        }
+      ],
+      "riskScore": 13.992042077546296
+    },
+    {
+      "scenarioId": "955a1c6c40cde5fe02535a4c00636e119cd5c44b",
+      "ticketId": "XFB-7",
+      "name": "Mobile layout collapses the branding panel",
+      "priority": "p0",
+      "edgePath": [
+        {
+          "kind": "modifies",
+          "from": "XFB-8",
+          "to": "logout"
+        },
+        {
+          "kind": "uses",
+          "from": "955a1c6c40cde5fe02535a4c00636e119cd5c44b",
+          "to": "f3ceb974014221075f6a00f7c950120af7642d01"
+        }
+      ],
+      "riskScore": 13.992042077546296
+    },
+    {
+      "scenarioId": "0198092f532221c55737ef6f0f3b5a6507f14704",
+      "ticketId": "XFB-7",
+      "name": "Invalid credentials display an error message",
+      "priority": "p0",
+      "edgePath": [
+        {
+          "kind": "modifies",
+          "from": "XFB-8",
+          "to": "logout"
+        },
+        {
+          "kind": "uses",
+          "from": "0198092f532221c55737ef6f0f3b5a6507f14704",
+          "to": "f3ceb974014221075f6a00f7c950120af7642d01"
+        }
+      ],
+      "riskScore": 13.99204207638889
+    }
+  ],
+  "generatedAt": "2026-05-19T16:28:42.420Z"
+}
