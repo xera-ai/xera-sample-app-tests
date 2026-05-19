@@ -1,0 +1,13 @@
+{
+  "ticket": "XFB-26",
+  "adapter": "web",
+  "xera_version": "0.16.2",
+  "prompts_version": "2.6.0",
+  "story_hash": "sha256:b5fd54a446db8212795a9b5a9113b36e937f7db6678dee6072e7d73ccd8d18a2",
+  "fetched_at": "2026-05-19T17:54:02.921Z",
+  "feature_generated_at": "2026-05-19T17:55:37.000Z",
+  "feature_generated_from_story_hash": "sha256:b5fd54a446db8212795a9b5a9113b36e937f7db6678dee6072e7d73ccd8d18a2",
+  "feature_hash": "sha256:020a0065d33edd3c7cce7a047c889032b36a5188ca53b923b440f2646b75201f",
+  "script_generated_at": "2026-05-19T17:57:21.000Z",
+  "script_generated_from_feature_hash": "sha256:020a0065d33edd3c7cce7a047c889032b36a5188ca53b923b440f2646b75201f"
+}
