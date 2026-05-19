@@ -30,10 +30,10 @@
     "xera:coverage-prepare": "xera-internal coverage-prepare"
   },
   "dependencies": {
-    "@xera-ai/core": "^0.16.1",
-    "@xera-ai/http": "^0.16.1",
-    "@xera-ai/prompts": "^0.16.1",
-    "@xera-ai/web": "^0.16.1"
+    "@xera-ai/core": "^0.16.2",
+    "@xera-ai/http": "^0.16.2",
+    "@xera-ai/prompts": "^0.16.2",
+    "@xera-ai/web": "^0.16.2"
   },
   "devDependencies": {
     "@playwright/test": "^1.60.0",
