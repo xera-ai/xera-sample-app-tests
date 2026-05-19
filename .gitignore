@@ -3,5 +3,8 @@
 .xera/**/runs/
 .xera/.auth/
 .xera/graph/snapshot.json
+.xera/graph.html
+.xera/coverage/report.md
+.xera/coverage/report.json
 .xera/cost-log.jsonl
 node_modules/
