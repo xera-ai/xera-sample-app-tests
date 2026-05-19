@@ -1,0 +1,42 @@
+{
+  "name": "xera-project",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "xera:fetch": "xera-internal fetch",
+    "xera:validate-feature": "xera-internal validate-feature",
+    "xera:typecheck": "xera-internal typecheck",
+    "xera:lint": "xera-internal lint",
+    "xera:exec": "xera-internal exec",
+    "xera:normalize": "xera-internal normalize",
+    "xera:report": "xera-internal report",
+    "xera:post": "xera-internal post",
+    "xera:status": "xera-internal status",
+    "xera:unlock": "xera-internal unlock",
+    "xera:promote": "xera-internal promote",
+    "xera:auth-setup": "xera-internal auth-setup",
+    "xera:graph-record": "xera-internal graph-record",
+    "xera:graph-snapshot": "xera-internal graph-snapshot",
+    "xera:graph-query": "xera-internal graph-query",
+    "xera:graph-backfill": "xera-internal graph-backfill",
+    "xera:graph-enrich": "xera-internal graph-enrich",
+    "xera:graph-render": "xera-internal graph-render",
+    "xera:impact-prepare": "xera-internal impact-prepare",
+    "xera:heal-prepare": "xera-internal heal-prepare",
+    "xera:disputes": "xera-internal disputes",
+    "xera:openapi-resolve": "xera-internal openapi-resolve",
+    "xera:explore-prepare": "xera-internal explore-prepare",
+    "xera:explore-finalize": "xera-internal explore-finalize"
+  },
+  "dependencies": {
+    "@xera-ai/core": "^0.15.5",
+    "@xera-ai/prompts": "^0.15.5",
+    "@xera-ai/web": "^0.15.5",
+    "@xera-ai/http": "^0.15.5"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.60.0",
+    "@types/node": "^25.8.0",
+    "typescript": "^6.0.3"
+  }
+}

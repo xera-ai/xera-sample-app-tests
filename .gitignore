@@ -1,0 +1,7 @@
+# xera
+.env
+.xera/**/runs/
+.xera/.auth/
+.xera/graph/snapshot.json
+.xera/cost-log.jsonl
+node_modules/
