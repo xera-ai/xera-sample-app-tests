@@ -4,10 +4,10 @@
     "": {
       "name": "xera-project",
       "dependencies": {
-        "@xera-ai/core": "^0.16.1",
-        "@xera-ai/http": "^0.16.1",
-        "@xera-ai/prompts": "^0.16.1",
-        "@xera-ai/web": "^0.16.1",
+        "@xera-ai/core": "^0.16.2",
+        "@xera-ai/http": "^0.16.2",
+        "@xera-ai/prompts": "^0.16.2",
+        "@xera-ai/web": "^0.16.2",
       },
       "devDependencies": {
         "@playwright/test": "^1.60.0",
@@ -31,13 +31,13 @@
 
     "@types/node": ["@types/node@25.9.0", "", { "dependencies": { "undici-types": ">=7.24.0 <7.24.7" } }, "sha512-AOQwYUNolgy3VosiRqXrACUXTN8nJUtPl7FJXMqZVyxiiCLhQuG3jXKvCS1ALr+Y2OmZhzzLVlYPEqJaiqkaJQ=="],
 
-    "@xera-ai/core": ["@xera-ai/core@0.16.1", "", { "dependencies": { "@playwright/test": "1.60.0", "@xera-ai/http": "^0.16.1", "@xera-ai/web": "^0.16.1", "dotenv": "^16.0.0", "fflate": "0.8.3", "yaml": "2.9.0", "zod": "4.4.3" }, "bin": { "xera-internal": "dist/bin/internal.js" } }, "sha512-aGgZWizDPRyr0qTSHmWUP7lRK4Nvy2DNFpAPeT4bh2tDQGrultzpy7xdWHejaWsYbp+sRxAlcft+45mHIvezTA=="],
+    "@xera-ai/core": ["@xera-ai/core@0.16.2", "", { "dependencies": { "@playwright/test": "1.60.0", "@xera-ai/http": "^0.16.2", "@xera-ai/web": "^0.16.2", "dotenv": "^16.0.0", "fflate": "0.8.3", "yaml": "2.9.0", "zod": "4.4.3" }, "bin": { "xera-internal": "dist/bin/internal.js" } }, "sha512-ubYCFvDzg2UfeCZ7i9t0wdqzD6WWKhe9+3SraZvNqGD6AbadgdcEQ1VvO8urvlgWhg4AlzK6bXofZc6A7/pg5Q=="],
 
-    "@xera-ai/http": ["@xera-ai/http@0.16.1", "", { "dependencies": { "@apidevtools/json-schema-ref-parser": "11.7.0", "@playwright/test": "1.60.0", "@xera-ai/core": "^0.16.1", "yaml": "2.9.0", "zod": "4.4.3" } }, "sha512-4DSS79Ie4Qehjh1kjK+hd68vPCSpjKNAGut5VjO8wxI2JEnJUCpSkKA1VJHFkhAlvP1EpLY6DbqE68sbP8d5fw=="],
+    "@xera-ai/http": ["@xera-ai/http@0.16.2", "", { "dependencies": { "@apidevtools/json-schema-ref-parser": "11.7.0", "@playwright/test": "1.60.0", "@xera-ai/core": "^0.16.2", "yaml": "2.9.0", "zod": "4.4.3" } }, "sha512-YJCPFVRMcdltMgF98xP0uCLJKddvtReyetewp6InmTk11+9Rnr32tnxu98TUCc2v2A08uNreXrOj24tRBgAALQ=="],
 
-    "@xera-ai/prompts": ["@xera-ai/prompts@0.16.1", "", {}, "sha512-sMQvfmX7MJaSpN0X6Pj4LwZs1FxOwyTpEPOas4cf/vEk+rjGoYtLUfDsY/2s7k8JaROb1Sd1G7QqPwlqHtoXsQ=="],
+    "@xera-ai/prompts": ["@xera-ai/prompts@0.16.2", "", {}, "sha512-G8/1JMZavc6/d1lxVjG6S4H5gJ7qMqdS+ngsMARKPnqDCW//1pT2kDKXuztAirDhLPhrlS7O/TWq97QD4dOHcQ=="],
 
-    "@xera-ai/web": ["@xera-ai/web@0.16.1", "", { "dependencies": { "@cucumber/gherkin": "39.1.0", "@cucumber/messages": "32.3.1", "@playwright/test": "1.60.0", "@xera-ai/core": "^0.16.1", "fflate": "0.8.3" } }, "sha512-nmmbTel3bUhx4jB0ZeU9F6Hp7vmY5fmbJ9yNWLsU58diI2DVtPWPP0da11yDV2eosbCrLnyU4J/td3i8t7A5Ww=="],
+    "@xera-ai/web": ["@xera-ai/web@0.16.2", "", { "dependencies": { "@cucumber/gherkin": "39.1.0", "@cucumber/messages": "32.3.1", "@playwright/test": "1.60.0", "@xera-ai/core": "^0.16.2", "fflate": "0.8.3" } }, "sha512-2bcArpYheLo1qo8tGIZ7ug/KkttuqrDjyvuC1QwLoASVrRYFKVx/KkLf+iTOhCIy4h7I8T7OZEF0VWuOufgvIQ=="],
 
     "argparse": ["argparse@2.0.1", "", {}, "sha512-8+9WqebbFzpX9OR+Wa6O29asIogeRMzcGtAINdpMHHyAg10f05aSFVBbcEqGf/PXw1EjAZ+q2/bEBg3DvurK3Q=="],
 
