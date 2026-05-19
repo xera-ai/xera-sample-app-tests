@@ -1,17 +1,17 @@
-## 🔴 xera test FAILED — XFB-6 (run 2026-05-19T15-52-46-172)
+## 🔴 xera test FAILED — XFB-6 (run 2026-05-19T16-46-05-389)
 **Classification:** REAL_BUG (confidence: medium)
 **Scenarios:** 1 / 7 passed
 ### Scenario: Successful registration logs the user in and redirects to Dashboard
 - **Classification:** REAL_BUG (confidence: medium)
-- **Diagnosis:** After submitting a valid registration (8+ char password, unique email), the app navigated to /login instead of Dashboard. The AC explicitly requires automatic login and redirect to Dashboard after successful registration; redirecting to the login page contradicts this. Could also indicate the API call failed silently — investigation of the server response is needed to confirm. Marked medium because the test does not capture the /auth/register HTTP response in this scenario.
+- **Diagnosis:** After submitting a valid registration (8+ char password, unique email), the app navigated to /login instead of Dashboard. AC-2 explicitly requires automatic login and redirect to Dashboard after successful registration.
 
-### Scenario: Duplicate email shows a clear error (HTTP 409)
-- **Classification:** TEST_BUG (confidence: medium)
-- **Diagnosis:** Test setup tried to pre-create a user via POST /auth/register at http://localhost:3000/api/v1/auth/register and received HTTP 404. The OpenAPI spec lists the endpoint at this path, so either the API base URL is misconfigured for this test or the API server is not running. The test never reached the duplicate-email branch — this is a setup defect, not an app failure.
-
-### Scenario: Password shorter than 8 characters shows an error (HTTP 400)
+### Scenario: Duplicate email shows a clear error
 - **Classification:** SELECTOR_DRIFT (confidence: medium)
-- **Diagnosis:** Assertion waited on getByRole('alert') but no element with role=alert appeared within 5s. The AC requires showing a password-length error; the app likely renders the error in a different element (inline helper text, role=status, or a non-ARIA span). Marked SELECTOR_DRIFT pending DOM inspection — could be REAL_BUG if no validation occurs at all.
+- **Diagnosis:** Setup TEST_BUG was fixed in this run (Playwright newContext baseURL + leading-slash path was dropping the /api/v1 prefix; now uses full URL). The test now reaches its assertion and reveals the same pattern as the other validation scenarios: getByRole('alert') is not present in the DOM. The app likely surfaces the error in a non-ARIA-alert element.
+
+### Scenario: Password shorter than 8 characters shows an error
+- **Classification:** SELECTOR_DRIFT (confidence: medium)
+- **Diagnosis:** Assertion waited on getByRole('alert') but no element with role=alert appeared within 5s. The AC requires showing a password-length error; the app likely renders the error in a non-ARIA element (inline helper text, role=status, or plain span).
 
 ### Scenario: Invalid email format shows an error
 - **Classification:** SELECTOR_DRIFT (confidence: medium)
@@ -32,7 +32,7 @@
 ### Reproduce locally
 
 ```
-bunx xera-internal exec XFB-6 --replay=2026-05-19T15-52-46-172
+bunx xera-internal exec XFB-6 --replay=2026-05-19T16-46-05-389
 ```
 ---
 xera v0.16.1 • prompts v2.6.0

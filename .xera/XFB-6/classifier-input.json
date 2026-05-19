@@ -1,33 +1,33 @@
 {
-  "runId": "2026-05-19T15-52-46-172",
+  "runId": "2026-05-19T16-46-05-389",
   "scenarios": [
     {
       "name": "Registration form displays Name, Email, and Password fields",
       "outcome": "PASS",
       "class": "PASS",
       "confidence": "high",
-      "rationale": "All three labeled inputs (Name, Email, Password) and the 'Create account' button were visible on /register, matching the AC for the registration form layout."
+      "rationale": "All three labeled inputs (Name, Email, Password) and the 'Create account' button were visible on /register."
     },
     {
       "name": "Successful registration logs the user in and redirects to Dashboard",
       "outcome": "FAIL",
       "class": "REAL_BUG",
       "confidence": "medium",
-      "rationale": "After submitting a valid registration (8+ char password, unique email), the app navigated to /login instead of Dashboard. The AC explicitly requires automatic login and redirect to Dashboard after successful registration; redirecting to the login page contradicts this. Could also indicate the API call failed silently — investigation of the server response is needed to confirm. Marked medium because the test does not capture the /auth/register HTTP response in this scenario."
+      "rationale": "After submitting a valid registration (8+ char password, unique email), the app navigated to /login instead of Dashboard. AC-2 explicitly requires automatic login and redirect to Dashboard after successful registration."
     },
     {
-      "name": "Duplicate email shows a clear error (HTTP 409)",
-      "outcome": "FAIL",
-      "class": "TEST_BUG",
-      "confidence": "medium",
-      "rationale": "Test setup tried to pre-create a user via POST /auth/register at http://localhost:3000/api/v1/auth/register and received HTTP 404. The OpenAPI spec lists the endpoint at this path, so either the API base URL is misconfigured for this test or the API server is not running. The test never reached the duplicate-email branch — this is a setup defect, not an app failure."
-    },
-    {
-      "name": "Password shorter than 8 characters shows an error (HTTP 400)",
+      "name": "Duplicate email shows a clear error",
       "outcome": "FAIL",
       "class": "SELECTOR_DRIFT",
       "confidence": "medium",
-      "rationale": "Assertion waited on getByRole('alert') but no element with role=alert appeared within 5s. The AC requires showing a password-length error; the app likely renders the error in a different element (inline helper text, role=status, or a non-ARIA span). Marked SELECTOR_DRIFT pending DOM inspection — could be REAL_BUG if no validation occurs at all."
+      "rationale": "Setup TEST_BUG was fixed in this run (Playwright newContext baseURL + leading-slash path was dropping the /api/v1 prefix; now uses full URL). The test now reaches its assertion and reveals the same pattern as the other validation scenarios: getByRole('alert') is not present in the DOM. The app likely surfaces the error in a non-ARIA-alert element."
+    },
+    {
+      "name": "Password shorter than 8 characters shows an error",
+      "outcome": "FAIL",
+      "class": "SELECTOR_DRIFT",
+      "confidence": "medium",
+      "rationale": "Assertion waited on getByRole('alert') but no element with role=alert appeared within 5s. The AC requires showing a password-length error; the app likely renders the error in a non-ARIA element (inline helper text, role=status, or plain span)."
     },
     {
       "name": "Invalid email format shows an error",

@@ -1,51 +1,39 @@
 {
   "tickets": [
     {
-      "id": "XFB-6",
-      "summary": "US-101 — Register an Account",
+      "id": "XFB-8",
+      "summary": "US-103 — Log Out",
       "acs": [
-        "Form has 3 fields: Name, Email, Password (≥8 characters)",
-        "Email must be valid and not already registered in the system",
-        "After successful registration, automatically log in and redirect to Dashboard",
-        "Display a clear error if the email is already taken (409)",
-        "Display an error if the password is fewer than 8 characters (400)",
-        "Layout: 2-panel design — dark branding panel (left) + form panel (right). On mobile (<768px), branding panel collapses; form takes full width."
+        "\"Sign out\" button is always visible in the navigation bar",
+        "After logging out, redirect to the login page",
+        "Refresh token is immediately invalidated",
+        "Old access tokens cannot be reused after logout"
       ],
       "scenarios": [
         {
-          "id": "70444a3e98b252806b16de10f3a5ac599ed1eefa",
-          "name": "Registration form displays Name, Email, and Password fields",
-          "gherkin": "  Scenario: Registration form displays Name, Email, and Password fields\n    Then I should see a \"Name\" input field\n    And I should see an \"Email\" input field\n    And I should see a \"Password\" input field\n    And I should see a \"Create account\" button\n"
+          "id": "a48afd8ea22341ac1831aac69d426663dfe2904d",
+          "name": "Sign-out button is visible in the navigation bar on the Dashboard",
+          "gherkin": "  Scenario: Sign-out button is visible in the navigation bar on the Dashboard\n    When I am on the Dashboard page\n    Then I should see a \"Sign out\" button in the navigation bar\n"
         },
         {
-          "id": "27cadf2b24b27ab08a9d64e7360f16e1924712ef",
-          "name": "Successful registration logs the user in and redirects to Dashboard",
-          "gherkin": "  Scenario: Successful registration logs the user in and redirects to Dashboard\n    When I enter \"Alice Example\" into the \"Name\" field\n    And I enter \"alice.new@example.com\" into the \"Email\" field\n    And I enter \"Secret123!\" into the \"Password\" field\n    And I click the \"Create account\" button\n    Then I should be redirected to the Dashboard page\n    And I should be authenticated\n"
+          "id": "5be0314336113f1e2122e54961e68025d4cbde90",
+          "name": "Sign-out button is visible on a non-Dashboard authenticated page",
+          "gherkin": "  Scenario: Sign-out button is visible on a non-Dashboard authenticated page\n    When I navigate to my profile page\n    Then I should see a \"Sign out\" button in the navigation bar\n"
         },
         {
-          "id": "d4706b9bcc6412efbb4a2979c409e00dea229427",
-          "name": "Duplicate email shows a clear error",
-          "gherkin": "  Scenario: Duplicate email shows a clear error\n    Given a user with email \"alice@example.com\" is already registered\n    When I enter \"Alice Example\" into the \"Name\" field\n    And I enter \"alice@example.com\" into the \"Email\" field\n    And I enter \"Secret123!\" into the \"Password\" field\n    And I click the \"Create account\" button\n    Then I should see the error \"Email is already taken\"\n    And the response status should be 409\n    And I should remain on the registration page\n"
+          "id": "6fc8a0c0161faddc26188945b244d6a038e7f43f",
+          "name": "Clicking Sign out redirects to the login page",
+          "gherkin": "  Scenario: Clicking Sign out redirects to the login page\n    Given I am on the Dashboard page\n    When I click the \"Sign out\" button\n    Then I should be redirected to the login page\n\n  # Note: AC \"Refresh token is immediately invalidated\" is asserted by calling\n  # POST /auth/refresh with the captured refresh_token after logout and\n  # expecting a 4xx response. The Gherkin keeps the step user-facing."
         },
         {
-          "id": "2d996542e7ffe3ead0707d7977e7abd48e2d5109",
-          "name": "Password shorter than 8 characters shows an error",
-          "gherkin": "  Scenario: Password shorter than 8 characters shows an error\n    When I enter \"Alice Example\" into the \"Name\" field\n    And I enter \"alice.short@example.com\" into the \"Email\" field\n    And I enter \"Short1!\" into the \"Password\" field\n    And I click the \"Create account\" button\n    Then I should see an error indicating the password must be at least 8 characters\n    And the response status should be 400\n    And I should remain on the registration page\n"
+          "id": "b6eac61942185e29a1d5b1ffb9744f57d21f4751",
+          "name": "Refresh token is invalidated immediately after logout",
+          "gherkin": "  Scenario: Refresh token is invalidated immediately after logout\n    Given I have captured my refresh token\n    When I click the \"Sign out\" button\n    And I attempt to refresh the access token using the captured refresh token\n    Then the refresh attempt should be rejected\n\n  # Note: AC \"Old access tokens cannot be reused after logout\" is asserted by\n  # calling an authenticated endpoint with the pre-logout access token and\n  # expecting 401."
         },
         {
-          "id": "bd911645a4a5d51d8c5671ed27971c9aec0c94fc",
-          "name": "Invalid email format shows an error",
-          "gherkin": "  Scenario: Invalid email format shows an error\n    When I enter \"Alice Example\" into the \"Name\" field\n    And I enter \"not-an-email\" into the \"Email\" field\n    And I enter \"Secret123!\" into the \"Password\" field\n    And I click the \"Create account\" button\n    Then I should see an error indicating the email is invalid\n    And I should remain on the registration page\n"
-        },
-        {
-          "id": "ebaf223cf1f46415a43d1c5cd429d4cd6842796c",
-          "name": "Desktop layout shows the 2-panel design",
-          "gherkin": "  Scenario: Desktop layout shows the 2-panel design\n    Given my viewport is 1280 by 800 pixels\n    Then I should see the dark branding panel on the left\n    And I should see the registration form panel on the right\n"
-        },
-        {
-          "id": "01a639c4acf0b5bbf9ad44e54df91af88727d33b",
-          "name": "Mobile layout collapses the branding panel",
-          "gherkin": "  Scenario: Mobile layout collapses the branding panel\n    Given my viewport is 375 by 812 pixels\n    Then the branding panel should be hidden\n    And the registration form should occupy the full width\n"
+          "id": "0ad410fc42c316386cd92992bf72043fb05c21b9",
+          "name": "Old access token cannot be reused after logout",
+          "gherkin": "  Scenario: Old access token cannot be reused after logout\n    Given I have captured my access token\n    When I click the \"Sign out\" button\n    And I call an authenticated endpoint with the captured access token\n    Then the response status should be 401\n"
         }
       ]
     }

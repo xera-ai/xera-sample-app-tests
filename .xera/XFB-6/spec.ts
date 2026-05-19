@@ -29,9 +29,11 @@ test.describe('XFB-6: US-101 — Register an Account', () => {
   });
 
   test('Duplicate email shows a clear error', async ({ page }) => {
-    const ctx = await playwrightRequest.newContext({ baseURL: API_BASE });
+    // Use full URL (not relative path with baseURL) — a leading-slash path
+    // resolves against the host, NOT against the /api/v1 base prefix.
+    const ctx = await playwrightRequest.newContext();
     const dupEmail = uniqueEmail('dup');
-    const firstRes = await ctx.post('/auth/register', {
+    const firstRes = await ctx.post(`${API_BASE}/auth/register`, {
       data: { name: 'First User', email: dupEmail, password: 'Secret123!' },
       failOnStatusCode: false,
     });
