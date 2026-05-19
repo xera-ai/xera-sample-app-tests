@@ -1,5 +1,5 @@
 ---
-description: Generate or regenerate the Gherkin test.feature file for a Jira ticket. Use when QA wants AI to produce Gherkin scenarios from the fetched user story.
+description: Generate or regenerate the Gherkin test.feature file for a ticket (Jira or GitHub). Use when QA wants AI to produce Gherkin scenarios from the fetched user story.
 alwaysApply: false
 ---
 

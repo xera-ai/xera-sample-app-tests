@@ -26,13 +26,14 @@
     "xera:disputes": "xera-internal disputes",
     "xera:openapi-resolve": "xera-internal openapi-resolve",
     "xera:explore-prepare": "xera-internal explore-prepare",
-    "xera:explore-finalize": "xera-internal explore-finalize"
+    "xera:explore-finalize": "xera-internal explore-finalize",
+    "xera:coverage-prepare": "xera-internal coverage-prepare"
   },
   "dependencies": {
-    "@xera-ai/core": "^0.15.5",
-    "@xera-ai/prompts": "^0.15.5",
-    "@xera-ai/web": "^0.15.5",
-    "@xera-ai/http": "^0.15.5"
+    "@xera-ai/core": "^0.16.1",
+    "@xera-ai/http": "^0.16.1",
+    "@xera-ai/prompts": "^0.16.1",
+    "@xera-ai/web": "^0.16.1"
   },
   "devDependencies": {
     "@playwright/test": "^1.60.0",

@@ -1,21 +1,23 @@
 ---
-description: Run the full xera pipeline for a Jira ticket end-to-end — fetch story, generate Gherkin, generate Playwright spec, execute, diagnose, post to Jira. Use when QA wants to test a ticket from scratch.
+description: Run the full xera pipeline for a ticket end-to-end — fetch story, generate Gherkin, generate Playwright spec, execute, diagnose, post a comment to the configured issue tracker (Jira or GitHub). Use when QA wants to test a ticket from scratch.
 ---
 
 The user invoked `/xera-run <TICKET>`. If no key, ask.
 
 This skill orchestrates the other six skills with quality gates between each step. If any step fails non-recoverably, STOP and surface the cause.
 
-## Step 0 — Health gate
+## Step 0 — Health gate (environment only)
 
-Run: `bunx xera doctor --strict {{TICKET}}`
+Run: `bunx xera doctor --strict`
 If non-zero exit → STOP. Show the output verbatim. Suggest the user fix env and re-run.
+
+This runs the environment-level checks (bun, `xera.config.ts`, baseUrl reachability, auth files, OpenAPI, `.env`, editor skill layout). The ticket-specific gate runs as Step 1.6 after fetch, since `.xera/{{TICKET}}/` legitimately does not exist on the very first invocation of `/xera-run`.
 
 ## Step 1 — Fetch
 
 Follow the same instructions as `xera-fetch.md`, but never prompt the user about re-fetching here.
 
-**Sub-steps 1–3 of xera-fetch (Jira call → write `story.md` + `meta.json`)**: skip if `story.md` exists AND `meta.json` shows a `story_hash` < 24 hours old. Otherwise refresh.
+**Sub-steps 1–3 of xera-fetch (tracker call → write `story.md` + `meta.json`)**: skip if `story.md` exists AND `meta.json` shows a `story_hash` < 24 hours old. Otherwise refresh.
 
 **Sub-step 4 of xera-fetch (cognitive AC body-extraction)**: re-run whenever `story.md` frontmatter shows `acceptanceCriteriaSource: none` AND `acceptanceCriteria:` block is empty — even when sub-steps 1–3 were skipped. The extraction is cheap and idempotent (writes back to the same frontmatter). Skipping it permanently is what causes projects with AC-in-body workflow to have empty AC across the graph.
 
@@ -50,6 +52,14 @@ This means the auto-trigger is effectively a "high-risk alarm" rather than a per
 
 Non-fatal: if `xera:impact-prepare` itself exits abnormally, log the warning but continue to Step 2 — graph features are advisory, not gating.
 
+## Step 1.6 — Ticket health gate
+
+Run: `bunx xera doctor --strict {{TICKET}}`
+
+This re-runs doctor with the ticket arg now that `/xera-fetch` has materialized `.xera/{{TICKET}}/` (story.md, meta.json, graph-input.json). Checks include: artifact dir present, `graph-input.json` parses with a valid `modifiesAreas` array, and `story.md` frontmatter has acceptanceCriteria (or an actionable hint if not).
+
+If non-zero exit → STOP. Show the output verbatim. The most common failures are recoverable in-place (re-run a single substep of `/xera-fetch`); pick the hint that matches the failing check.
+
 ## Step 2 — Feature
 
 Follow `xera-feature.md`. If `feature_generated_from_story_hash !== story_hash`, regenerate. If unchanged AND spec.ts exists, skip feature generation entirely.
@@ -68,8 +78,8 @@ Run `bun run xera:normalize {{TICKET}}`. This writes `normalized.json` AND emits
 
 ## Step 6 — Diagnose + report + post
 
-Follow `xera-report.md` from step 3 onwards. If the user is the SAMPLE-001 ticket (meta.source === "local"), do NOT post to Jira and do NOT prompt about posting — only print the drafted comment.
+Follow `xera-report.md` from step 3 onwards. If the user is the SAMPLE-001 ticket (meta.source === "local"), do NOT post a comment and do NOT prompt about posting — only print the drafted comment.
 
 ## Step 7 — Summary
 
-Print a single-paragraph summary covering: overall result, classification, per-scenario counts, link to Jira comment (if posted), and the reproduce command (`bunx xera-internal exec {{TICKET}} --replay=<runId>`).
+Print a single-paragraph summary covering: overall result, classification, per-scenario counts, link to the posted comment (if posted — Jira link or GitHub issue-comment anchor), and the reproduce command (`bunx xera-internal exec {{TICKET}} --replay=<runId>`).
