@@ -1,4 +1,4 @@
-name: xera coverage → GitHub Pages
+name: xera graph viewer (Pages)
 on:
   push:
     branches: [main]
