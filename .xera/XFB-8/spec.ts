@@ -7,8 +7,6 @@ const REGULAR_PWD = process.env.TEST_REGULAR_PWD ?? 'Secret123!';
 const STORAGE_STATE = '.xera/.auth/.cache/regular.json';
 
 async function apiLogin(): Promise<{ accessToken: string; refreshToken: string }> {
-  // Use full URL — a leading-slash path with baseURL resolves against the
-  // host and drops the /api/v1 prefix in Playwright's URL composition.
   const ctx = await playwrightRequest.newContext();
   const res = await ctx.post(`${API_BASE}/auth/login`, {
     data: { email: REGULAR_EMAIL, password: REGULAR_PWD },

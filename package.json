@@ -27,7 +27,11 @@
     "xera:openapi-resolve": "xera-internal openapi-resolve",
     "xera:explore-prepare": "xera-internal explore-prepare",
     "xera:explore-finalize": "xera-internal explore-finalize",
-    "xera:coverage-prepare": "xera-internal coverage-prepare"
+    "xera:coverage-prepare": "xera-internal coverage-prepare",
+    "app:up": "docker compose -f docker-compose-app.yml up -d",
+    "app:down": "docker compose -f docker-compose-app.yml down",
+    "app:logs": "docker compose -f docker-compose-app.yml logs -f",
+    "app:wait-healthy": "until [ \"$(docker inspect -f '{{.State.Health.Status}}' $(docker compose -f docker-compose-app.yml ps -q backend) 2>/dev/null)\" = \"healthy\" ]; do sleep 2; done && echo backend healthy"
   },
   "dependencies": {
     "@xera-ai/core": "^0.16.2",
