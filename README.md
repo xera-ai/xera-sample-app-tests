@@ -14,9 +14,7 @@ You drive the pipeline through slash commands inside an AI agent (Claude Code, C
 ## Prerequisites
 
 - [Bun](https://bun.sh) 1.2+
-- A running FlowBoard SUT
-  - web: `http://localhost:5173`
-  - api: `http://localhost:3000/api/v1`
+- Docker (only if you use the bundled SUT — see below)
 - Access to Jira project `XFB` at `trinitytechvn.atlassian.net` (or use the Atlassian MCP in your agent session)
 
 ## Setup
@@ -28,6 +26,27 @@ bunx playwright install
 ```
 
 The base URLs, adapters, auth strategy and tracker config all live in [`xera.config.ts`](./xera.config.ts) — that's the single source of truth.
+
+## Running the SUT (FlowBoard)
+
+The repo ships with [`docker-compose-app.yml`](./docker-compose-app.yml), which pulls pre-built images from `ghcr.io/xera-ai/xera-sample-app-*`. You don't need to clone the sample-app repo — `bun run app:up` is enough.
+
+```bash
+bun run app:up             # pull images + start backend (3000) + frontend (5173)
+bun run app:wait-healthy   # block until backend /health returns 200
+bun run app:logs           # tail logs
+bun run app:down           # stop + remove
+```
+
+Defaults match [`xera.config.ts`](./xera.config.ts) (`web: 5173`, `api: 3000`). If those ports are taken, override and update the config to match:
+
+```bash
+BACKEND_PORT=3100 FRONTEND_PORT=5273 bun run app:up
+# then point xera.config.ts.web.baseUrl.staging at http://localhost:5273
+# (xera:exec ignores XERA_BASE_URL, so the config must reflect the actual port)
+```
+
+Seed users are baked into the backend image: `admin@test.com / admin123` and `user@test.com / user123` — put them in `.env` as `TEST_ADMIN_*` / `TEST_REGULAR_*`.
 
 ## Common workflows
 

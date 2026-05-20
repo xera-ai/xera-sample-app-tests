@@ -117,6 +117,19 @@ When the user re-invokes `/xera-run`, only the steps with stale hashes regenerat
 - `xera doctor --strict` is the first gate in `/xera-run` — pass it before doing anything ticket-specific.
 - Auth: storageState files live at `.xera/.auth/` (gitignored). `shared/auth-setup.ts` re-bootstraps via `TEST_<ROLE>_EMAIL` + `TEST_<ROLE>_PWD` env vars.
 
+### Booting the SUT
+
+The repo bundles [`docker-compose-app.yml`](./docker-compose-app.yml) which pulls pre-built images from `ghcr.io/xera-ai/xera-sample-app-{backend,frontend}:latest`. No need to clone the sample-app repo.
+
+| Script | Purpose |
+| --- | --- |
+| `bun run app:up` | Pull images + start backend (`3000`) + frontend (`5173`) detached |
+| `bun run app:wait-healthy` | Block until backend healthcheck (`/health`) passes |
+| `bun run app:logs` | Tail logs (interactive) |
+| `bun run app:down` | Stop + remove containers, network, volumes preserved |
+
+Ports are env-driven: `BACKEND_PORT=3100 FRONTEND_PORT=5273 bun run app:up`. **Caveat:** because `xera:exec` does not honor `XERA_BASE_URL`, any port change to the frontend requires a matching edit in `xera.config.ts.web.baseUrl` — do not assume the env var alone is enough. The healthcheck in the compose file uses `127.0.0.1` (not `localhost`) on purpose: busybox `wget` resolves `localhost` to `::1` but the backend binds IPv4-only, so `localhost` causes a perpetually-unhealthy container.
+
 ## Git conventions
 
 - Default branch: `main`. Open feature branches as `test/<ticket-slug>` (e.g. `test/xfb-6-register-account`).

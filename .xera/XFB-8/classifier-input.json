@@ -1,5 +1,5 @@
 {
-  "runId": "2026-05-19T16-50-10-160",
+  "runId": "2026-05-20T05-18-43-731",
   "scenarios": [
     {
       "name": "Sign-out button is visible in the navigation bar on the Dashboard",
@@ -13,7 +13,7 @@
       "outcome": "PASS",
       "class": "PASS",
       "confidence": "high",
-      "rationale": "Sign out button rendered on /profile as well — confirms AC-0's 'always visible' clause across authenticated routes."
+      "rationale": "Sign out button rendered on /profile — confirms AC-0's 'always visible' clause across authenticated routes."
     },
     {
       "name": "Clicking Sign out redirects to the login page",
@@ -27,14 +27,14 @@
       "outcome": "FAIL",
       "class": "REAL_BUG",
       "confidence": "high",
-      "rationale": "Previous run's TEST_BUG (URL resolution dropped /api/v1 prefix) was fixed. The test now reaches the assertion and proves a real server-side defect: POST /api/v1/auth/refresh with the pre-logout refresh_token returns HTTP 200 after the user logs out via UI. AC-2 requires the refresh token to be invalidated immediately on logout — the server is not honouring that. Client-side state is cleared (redirect to /login fires), but the refresh token remains valid server-side."
+      "rationale": "After UI logout, POST /api/v1/auth/refresh with the pre-logout refresh_token returns HTTP 200 (expected 4xx). AC-2 \"Refresh token is immediately invalidated\" is not met server-side — client redirects to /login but the refresh token remains valid. Reproduces the prior run's REAL_BUG classification (2026-05-19T16:51:55Z); spec.ts and feature_hash unchanged since."
     },
     {
       "name": "Old access token cannot be reused after logout",
       "outcome": "FAIL",
       "class": "REAL_BUG",
       "confidence": "high",
-      "rationale": "Previous run's TEST_BUG was fixed. The test now reaches the assertion and proves a real server-side defect: GET /api/v1/auth/me with the pre-logout access token returns HTTP 200 (expected 401) after the user logs out. AC-3 requires the access token to be unusable post-logout — the server is not invalidating it."
+      "rationale": "After UI logout, GET /api/v1/auth/me with the pre-logout access_token returns HTTP 200 (expected 401). AC-3 \"Old access tokens cannot be reused after logout\" is not met server-side. Reproduces the prior run's REAL_BUG classification."
     }
   ],
   "scenarioCounts": { "total": 5, "passed": 3, "failed": 2, "skipped": 0 }
