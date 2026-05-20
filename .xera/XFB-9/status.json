@@ -1,0 +1,25 @@
+{
+  "ticket": "XFB-9",
+  "lastRun": "2026-05-20T07:03:06.046Z",
+  "result": "PASS",
+  "classification": "PASS",
+  "confidence": "high",
+  "scenarios": {
+    "total": 5,
+    "passed": 5,
+    "failed": 0,
+    "skipped": 0
+  },
+  "history": [
+    {
+      "ts": "2026-05-20T07:03:06.046Z",
+      "result": "PASS",
+      "class": "PASS"
+    },
+    {
+      "ts": "2026-05-20T06:24:23.482Z",
+      "result": "FAIL",
+      "class": "REAL_BUG"
+    }
+  ]
+}

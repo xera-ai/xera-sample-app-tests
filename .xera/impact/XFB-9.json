@@ -1,0 +1,9 @@
+{
+  "targetTicket": "XFB-9",
+  "modifiedAreas": [
+    "settings",
+    "api-keys"
+  ],
+  "scenarios": [],
+  "generatedAt": "2026-05-20T06:15:35.810Z"
+}

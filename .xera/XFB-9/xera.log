@@ -1,0 +1,7 @@
+{"ts":"2026-05-20T06:21:23.016Z","step":"auth-refresh","role":"admin"}
+{"ts":"2026-05-20T06:21:23.030Z","step":"exec.start","runId":"2026-05-20T06-21-22-542","env":"staging","baseURL":"http://localhost:5273"}
+{"ts":"2026-05-20T06:23:33.221Z","step":"exec.done","runId":"2026-05-20T06-21-22-542","exit":1,"ms":130679}
+{"ts":"2026-05-20T06:59:02.112Z","step":"exec.start","runId":"2026-05-20T06-59-01-947","env":"staging","baseURL":"http://localhost:5273"}
+{"ts":"2026-05-20T06:59:31.754Z","step":"exec.done","runId":"2026-05-20T06-59-01-947","exit":1,"ms":29806}
+{"ts":"2026-05-20T07:02:41.085Z","step":"exec.start","runId":"2026-05-20T07-02-40-993","env":"staging","baseURL":"http://localhost:5273"}
+{"ts":"2026-05-20T07:02:44.611Z","step":"exec.done","runId":"2026-05-20T07-02-40-993","exit":0,"ms":3618}
