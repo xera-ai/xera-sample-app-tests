@@ -3,7 +3,7 @@ services:
     image: ghcr.io/xera-ai/xera-sample-app-backend:${TAG:-latest}
     pull_policy: always
     ports:
-      - "${BACKEND_PORT:-3000}:3000"
+      - "${BACKEND_PORT:-3100}:3000"
     volumes:
       - data:/app/data
     environment:
@@ -21,7 +21,7 @@ services:
     image: ghcr.io/xera-ai/xera-sample-app-frontend:${TAG:-latest}
     pull_policy: always
     ports:
-      - "${FRONTEND_PORT:-5173}:80"
+      - "${FRONTEND_PORT:-5273}:80"
     depends_on:
       backend:
         condition: service_healthy

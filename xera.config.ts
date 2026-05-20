@@ -11,7 +11,7 @@ export default defineConfig({
     },
   },
   web: {
-    baseUrl: { staging: 'http://localhost:5173' },
+    baseUrl: { staging: 'http://localhost:5273' },
     defaultEnv: 'staging',
     auth: {
       strategy: 'storageState',
@@ -24,7 +24,7 @@ export default defineConfig({
     },
   },
   http: {
-    baseUrl: { staging: 'http://localhost:3000/api/v1' },
+    baseUrl: { staging: 'http://localhost:3100/api/v1' },
     defaultEnv: 'staging',
     spec: './openapi.json',
     auth: {
