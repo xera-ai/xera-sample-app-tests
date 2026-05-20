@@ -1,0 +1,105 @@
+{
+  "targetTicket": "XFB-10",
+  "modifiedAreas": [
+    "settings",
+    "profile"
+  ],
+  "scenarios": [
+    {
+      "scenarioId": "e585068001e263afa02e12fab81093709efcb751",
+      "ticketId": "XFB-9",
+      "name": "A revoked key stops working immediately",
+      "priority": "p0",
+      "edgePath": [
+        {
+          "kind": "modifies",
+          "from": "XFB-10",
+          "to": "settings"
+        },
+        {
+          "kind": "uses",
+          "from": "e585068001e263afa02e12fab81093709efcb751",
+          "to": "1c91773924157381026b0b9fadc48035ece31d1d"
+        }
+      ],
+      "riskScore": 14
+    },
+    {
+      "scenarioId": "fb6f26927caa1ba8f1a6e337e9b0e9f754317f5f",
+      "ticketId": "XFB-9",
+      "name": "The API keys page displays the list of existing keys",
+      "priority": "p1",
+      "edgePath": [
+        {
+          "kind": "modifies",
+          "from": "XFB-10",
+          "to": "settings"
+        },
+        {
+          "kind": "uses",
+          "from": "fb6f26927caa1ba8f1a6e337e9b0e9f754317f5f",
+          "to": "1c91773924157381026b0b9fadc48035ece31d1d"
+        }
+      ],
+      "riskScore": 11
+    },
+    {
+      "scenarioId": "5f06cff6e533e8abd2c88d1b7212e76ea8d9e262",
+      "ticketId": "XFB-9",
+      "name": "Creating a new key requires a name",
+      "priority": "p1",
+      "edgePath": [
+        {
+          "kind": "modifies",
+          "from": "XFB-10",
+          "to": "settings"
+        },
+        {
+          "kind": "uses",
+          "from": "5f06cff6e533e8abd2c88d1b7212e76ea8d9e262",
+          "to": "1c91773924157381026b0b9fadc48035ece31d1d"
+        }
+      ],
+      "riskScore": 11
+    },
+    {
+      "scenarioId": "875361f2bf51411b45728be4d673fdb53f6f9f88",
+      "ticketId": "XFB-9",
+      "name": "Creating a new key with a valid name shows the raw key exactly once",
+      "priority": "p1",
+      "edgePath": [
+        {
+          "kind": "modifies",
+          "from": "XFB-10",
+          "to": "settings"
+        },
+        {
+          "kind": "uses",
+          "from": "875361f2bf51411b45728be4d673fdb53f6f9f88",
+          "to": "1c91773924157381026b0b9fadc48035ece31d1d"
+        }
+      ],
+      "riskScore": 11
+    },
+    {
+      "scenarioId": "b8b491a61f6971940315c6a9d4c26bd0c302593c",
+      "ticketId": "XFB-9",
+      "name": "Revoking an existing key removes it from the list",
+      "priority": "p1",
+      "edgePath": [
+        {
+          "kind": "modifies",
+          "from": "XFB-10",
+          "to": "settings"
+        },
+        {
+          "kind": "uses",
+          "from": "b8b491a61f6971940315c6a9d4c26bd0c302593c",
+          "to": "1c91773924157381026b0b9fadc48035ece31d1d"
+        }
+      ],
+      "riskScore": 11
+    }
+  ],
+  "generatedAt": "2026-05-20T07:14:41.388Z"
+}
