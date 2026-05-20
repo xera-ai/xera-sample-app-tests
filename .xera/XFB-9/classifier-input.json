@@ -1,0 +1,41 @@
+{
+  "runId": "2026-05-20T07-02-40-993",
+  "scenarios": [
+    {
+      "name": "The API keys page displays the list of existing keys",
+      "outcome": "PASS",
+      "class": "PASS",
+      "confidence": "high",
+      "rationale": "API Keys heading and table both render. Table contains at least one row."
+    },
+    {
+      "name": "Creating a new key requires a name",
+      "outcome": "PASS",
+      "class": "PASS",
+      "confidence": "high",
+      "rationale": "Submitting the create form with an empty Name input keeps the form open; the input reports validity.valid=false (HTML5 required) and the 'API Key Created' result panel never appears."
+    },
+    {
+      "name": "Creating a new key with a valid name shows the raw key exactly once",
+      "outcome": "PASS",
+      "class": "PASS",
+      "confidence": "high",
+      "rationale": "Submitting with a valid name surfaces the 'API Key Created' panel with the warning text and a 64-char hex key. After dismissing with 'Done', the raw key is no longer present anywhere on the page and the new key shows in the table."
+    },
+    {
+      "name": "Revoking an existing key removes it from the list",
+      "outcome": "PASS",
+      "class": "PASS",
+      "confidence": "high",
+      "rationale": "After Delete is clicked and the native confirm dialog is accepted, the row disappears from the keys table."
+    },
+    {
+      "name": "A revoked key stops working immediately",
+      "outcome": "PASS",
+      "class": "PASS",
+      "confidence": "high",
+      "rationale": "Revoking the key removes the row, and an authenticated GET /api/v1/api-keys/ using that key's raw value returns HTTP 401."
+    }
+  ],
+  "scenarioCounts": { "total": 5, "passed": 5, "failed": 0, "skipped": 0 }
+}
