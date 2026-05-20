@@ -34,10 +34,10 @@
     "app:wait-healthy": "until [ \"$(docker inspect -f '{{.State.Health.Status}}' $(docker compose -f docker-compose-app.yml ps -q backend) 2>/dev/null)\" = \"healthy\" ]; do sleep 2; done && echo backend healthy"
   },
   "dependencies": {
-    "@xera-ai/core": "^0.16.2",
-    "@xera-ai/http": "^0.16.2",
-    "@xera-ai/prompts": "^0.16.2",
-    "@xera-ai/web": "^0.16.2"
+    "@xera-ai/core": "^0.16.3",
+    "@xera-ai/http": "^0.16.3",
+    "@xera-ai/prompts": "^0.16.3",
+    "@xera-ai/web": "^0.16.3"
   },
   "devDependencies": {
     "@playwright/test": "^1.60.0",
