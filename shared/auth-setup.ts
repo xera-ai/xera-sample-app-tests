@@ -3,7 +3,8 @@ import { defineHttpAuthSetup, presetHttpAuth } from '@xera-ai/http';
 
 
 export const web = defineAuthSetup(async (page, _role, creds) => {
-  await page.goto('/login');
+  const baseURL = process.env.XERA_BASE_URL ?? 'http://localhost:5273';
+  await page.goto(`${baseURL}/login`);
   await page.getByLabel('Email').fill(creds.email);
   await page.getByLabel('Password').fill(creds.password);
   await page.getByRole('button', { name: 'Sign in' }).click();
