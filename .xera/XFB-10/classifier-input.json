@@ -1,0 +1,27 @@
+{
+  "runId": "2026-05-20T07-17-37-869",
+  "scenarios": [
+    {
+      "name": "Changing the display name and saving persists the new name",
+      "outcome": "FAIL",
+      "class": "REAL_BUG",
+      "confidence": "high",
+      "rationale": "Submitting the name change fires PATCH /api/v1/users/user-1 which returns 404 because the backend only exposes PUT for that path (openapi.json registers `PUT /api/v1/users/{id}` only — see `grep -i users openapi.json`). The frontend then renders the inline text 'Failed to update profile', so no confirmation message ever appears and a page reload still shows the original name."
+    },
+    {
+      "name": "Changing the password requires a new password of at least 8 characters",
+      "outcome": "PASS",
+      "class": "PASS",
+      "confidence": "high",
+      "rationale": "The new-password input carries minlength=8; the browser blocks submission and reports validity.valid=false with the native message 'Please lengthen this text to 8 characters or more'. No request hits the backend and no confirmation appears."
+    },
+    {
+      "name": "Changing the password with a valid new password shows a confirmation message",
+      "outcome": "FAIL",
+      "class": "REAL_BUG",
+      "confidence": "high",
+      "rationale": "Same HTTP-verb mismatch as scenario 1: the form submits `PATCH /api/v1/users/user-1` and the backend responds 404. The UI surfaces 'Failed to change password' instead of any confirmation. AC3 cannot be verified until the password endpoint is wired up (either accept PATCH or change the frontend to PUT)."
+    }
+  ],
+  "scenarioCounts": { "total": 3, "passed": 1, "failed": 2, "skipped": 0 }
+}

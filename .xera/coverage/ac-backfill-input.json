@@ -1,50 +1,66 @@
 {
   "tickets": [
     {
-      "id": "XFB-26",
-      "summary": "US-502 — Overview Dashboard",
+      "id": "XFB-9",
+      "summary": "US-104 — Manage API Keys",
       "acs": [
-        "Displays 3 statistics: Total Tasks, In Progress, Completed",
-        "List of 5 most recent tasks with Status, Priority, and creation date",
-        "Tasks can be clicked to open task detail",
-        "\"View all\" link to see all tasks",
-        "Figures only count tasks in projects the user belongs to"
+        "The `/settings/api-keys` page displays a list of existing keys",
+        "Creating a new key requires entering a name (label)",
+        "The raw key is displayed **only once** after creation — it cannot be viewed again",
+        "Any key can be revoked (deleted)",
+        "A revoked key stops working immediately"
       ],
       "scenarios": [
         {
-          "id": "367e64d430f305ef82795eda8907f0c3877e2807",
-          "name": "Overview shows three statistics: Total Tasks, In Progress, and Completed",
-          "gherkin": "  Scenario: Overview shows three statistics: Total Tasks, In Progress, and Completed\n    Then I should see a statistic labelled \"Total Tasks\"\n    And I should see a statistic labelled \"In Progress\"\n    And I should see a statistic labelled \"Completed\"\n"
+          "id": "fb6f26927caa1ba8f1a6e337e9b0e9f754317f5f",
+          "name": "The API keys page displays the list of existing keys",
+          "gherkin": "  Scenario: The API keys page displays the list of existing keys\n    Then I should see the \"API Keys\" heading\n    And I should see a list of my existing API keys\n"
         },
         {
-          "id": "6761a7808fd1942aab4a12248036c7202ac25eaa",
-          "name": "Each statistic displays a numeric value",
-          "gherkin": "  Scenario: Each statistic displays a numeric value\n    Then the \"Total Tasks\" statistic should display a non-negative integer\n    And the \"In Progress\" statistic should display a non-negative integer\n    And the \"Completed\" statistic should display a non-negative integer\n"
+          "id": "5f06cff6e533e8abd2c88d1b7212e76ea8d9e262",
+          "name": "Creating a new key requires a name",
+          "gherkin": "  Scenario: Creating a new key requires a name\n    When I click the \"Create key\" button\n    And I submit the form without entering a name\n    Then I should see a validation message indicating a name is required\n    And no new key is added to the list\n"
         },
         {
-          "id": "92133f73388b9e407e05a6711a9951ae02eef80a",
-          "name": "Recent tasks list shows at most 5 items",
-          "gherkin": "  Scenario: Recent tasks list shows at most 5 items\n    Then I should see a \"Recent tasks\" section\n    And the section should list at most 5 tasks\n"
+          "id": "875361f2bf51411b45728be4d673fdb53f6f9f88",
+          "name": "Creating a new key with a valid name shows the raw key exactly once",
+          "gherkin": "  Scenario: Creating a new key with a valid name shows the raw key exactly once\n    When I click the \"Create key\" button\n    And I enter \"Postman integration\" as the key name\n    And I submit the form\n    Then I should see the newly created raw API key displayed\n    And I should see a warning that the key will not be shown again\n    When I dismiss the new-key dialog\n    Then the raw key value is no longer visible anywhere on the page\n    And the key \"Postman integration\" appears in the list of existing keys\n"
         },
         {
-          "id": "8ae91e24f5c100895de92c7bbde02f8314e625b8",
-          "name": "Each recent task row shows Status, Priority, and creation date",
-          "gherkin": "  Scenario: Each recent task row shows Status, Priority, and creation date\n    Then every recent task row should display a Status\n    And every recent task row should display a Priority\n    And every recent task row should display a creation date\n"
+          "id": "b8b491a61f6971940315c6a9d4c26bd0c302593c",
+          "name": "Revoking an existing key removes it from the list",
+          "gherkin": "  Scenario: Revoking an existing key removes it from the list\n    Given I have an existing API key named \"Old script\"\n    When I revoke the key named \"Old script\"\n    And I confirm the revocation\n    Then the key \"Old script\" no longer appears in the list of existing keys\n"
         },
         {
-          "id": "959d20c013e88c2b0b03335b03336bb2140bf0e2",
-          "name": "Clicking a recent task opens its detail page",
-          "gherkin": "  Scenario: Clicking a recent task opens its detail page\n    Given the recent tasks list is not empty\n    When I click the first recent task\n    Then I should be navigated to the task's detail page\n"
+          "id": "e585068001e263afa02e12fab81093709efcb751",
+          "name": "A revoked key stops working immediately",
+          "gherkin": "  Scenario: A revoked key stops working immediately\n    Given I have an existing API key named \"Soon to revoke\" with a known raw value\n    When I revoke the key named \"Soon to revoke\"\n    And I confirm the revocation\n    And I send an authenticated API request using that revoked raw key\n    Then the API responds with a 401 Unauthorized status\n"
+        }
+      ]
+    },
+    {
+      "id": "XFB-10",
+      "summary": "US-105 — Update Profile",
+      "acs": [
+        "The `/settings/profile` page allows changing the display name",
+        "Changing the password requires entering a new password (≥8 characters)",
+        "Successful save → display a confirmation message"
+      ],
+      "scenarios": [
+        {
+          "id": "4fee5fffafbcb2a9ea28395c3842584974a4114c",
+          "name": "Changing the display name and saving persists the new name",
+          "gherkin": "  Scenario: Changing the display name and saving persists the new name\n    When I change the \"Name\" field to \"Updated Tester\"\n    And I click the \"Save changes\" button\n    Then I should see a confirmation message indicating the profile was saved\n    When I reload the page\n    Then the \"Name\" field shows \"Updated Tester\"\n"
         },
         {
-          "id": "9649b8ce4246ca395e399cc27c0ac689016d30ca",
-          "name": "\"View all\" link navigates to the full tasks list",
-          "gherkin": "  Scenario: \"View all\" link navigates to the full tasks list\n    When I click the \"View all\" link\n    Then I should be navigated to the all-tasks page\n\n  # Note: AC \"Figures only count tasks in projects the user belongs to\" is asserted\n  # by comparing the Total Tasks figure in the UI against the count returned by\n  # GET /api/v1/tasks for the same authenticated user (which the backend already\n  # scopes to projects the user belongs to)."
+          "id": "0a34d391e9ac3ab498d5cb3754359c18e811f044",
+          "name": "Changing the password requires a new password of at least 8 characters",
+          "gherkin": "  Scenario: Changing the password requires a new password of at least 8 characters\n    When I enter \"user123\" in the \"Current password\" field\n    And I enter \"short\" in the \"New password\" field\n    And I click the \"Change password\" button\n    Then the \"New password\" field is reported as invalid\n    And no confirmation message is displayed\n"
         },
         {
-          "id": "629d1eb5ed79a4eeefe3de7806cf78bee835ce79",
-          "name": "Statistics count only tasks from projects the user belongs to",
-          "gherkin": "  Scenario: Statistics count only tasks from projects the user belongs to\n    Given I capture the count of tasks returned by the tasks API for the current user\n    Then the \"Total Tasks\" statistic should equal the captured count\n"
+          "id": "a2675a8308f0b10e14c11846f6da97d4e0e36bc3",
+          "name": "Changing the password with a valid new password shows a confirmation message",
+          "gherkin": "  Scenario: Changing the password with a valid new password shows a confirmation message\n    When I enter \"user123\" in the \"Current password\" field\n    And I enter \"newvalid123\" in the \"New password\" field\n    And I click the \"Change password\" button\n    Then I should see a confirmation message indicating the password was changed\n"
         }
       ]
     }

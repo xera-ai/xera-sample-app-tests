@@ -1,0 +1,2 @@
+{"ts":"2026-05-20T07:17:37.959Z","step":"exec.start","runId":"2026-05-20T07-17-37-869","env":"staging","baseURL":"http://localhost:5273"}
+{"ts":"2026-05-20T07:17:50.569Z","step":"exec.done","runId":"2026-05-20T07-17-37-869","exit":1,"ms":12699}
