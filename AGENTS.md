@@ -112,8 +112,8 @@ When the user re-invokes `/xera-run`, only the steps with stale hashes regenerat
 
 - Runtime: **Bun 1.2+** (the package scripts shell out to `xera-internal`, which is the `@xera-ai/core` CLI).
 - Playwright: declared as a devDep; `xera:exec` configures `XERA_BASE_URL` for `playwright.config.ts`.
-- Web SUT: `http://localhost:5173` (staging env from `xera.config.ts`).
-- API: `http://localhost:3000/api/v1` (FlowBoard), schema in `openapi.json`.
+- Web SUT: `http://localhost:5273` (staging env from `xera.config.ts`; served by the bundled docker compose on a non-default port to avoid colliding with a local sample-app dev server on 5173).
+- API: `http://localhost:3100/api/v1` (FlowBoard, also via the bundled compose; sample-app dev usually uses 3000), schema in `openapi.json`.
 - `xera doctor --strict` is the first gate in `/xera-run` — pass it before doing anything ticket-specific.
 - Auth: storageState files live at `.xera/.auth/` (gitignored). `shared/auth-setup.ts` re-bootstraps via `TEST_<ROLE>_EMAIL` + `TEST_<ROLE>_PWD` env vars.
 
@@ -123,12 +123,12 @@ The repo bundles [`docker-compose-app.yml`](./docker-compose-app.yml) which pull
 
 | Script | Purpose |
 | --- | --- |
-| `bun run app:up` | Pull images + start backend (`3000`) + frontend (`5173`) detached |
+| `bun run app:up` | Pull images + start backend (`3100`) + frontend (`5273`) detached — non-default ports so a local sample-app dev server on `3000`/`5173` can co-exist |
 | `bun run app:wait-healthy` | Block until backend healthcheck (`/health`) passes |
 | `bun run app:logs` | Tail logs (interactive) |
 | `bun run app:down` | Stop + remove containers, network, volumes preserved |
 
-Ports are env-driven: `BACKEND_PORT=3100 FRONTEND_PORT=5273 bun run app:up`. **Caveat:** because `xera:exec` does not honor `XERA_BASE_URL`, any port change to the frontend requires a matching edit in `xera.config.ts.web.baseUrl` — do not assume the env var alone is enough. The healthcheck in the compose file uses `127.0.0.1` (not `localhost`) on purpose: busybox `wget` resolves `localhost` to `::1` but the backend binds IPv4-only, so `localhost` causes a perpetually-unhealthy container.
+Ports are env-driven: `BACKEND_PORT=3200 FRONTEND_PORT=5373 bun run app:up`. **Caveat:** because `xera:exec` does not honor `XERA_BASE_URL`, any port change to the frontend requires a matching edit in `xera.config.ts.web.baseUrl` — do not assume the env var alone is enough. The healthcheck in the compose file uses `127.0.0.1` (not `localhost`) on purpose: busybox `wget` resolves `localhost` to `::1` but the backend binds IPv4-only, so `localhost` causes a perpetually-unhealthy container.
 
 ## Git conventions
 

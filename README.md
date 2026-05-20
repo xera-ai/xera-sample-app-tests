@@ -32,17 +32,19 @@ The base URLs, adapters, auth strategy and tracker config all live in [`xera.con
 The repo ships with [`docker-compose-app.yml`](./docker-compose-app.yml), which pulls pre-built images from `ghcr.io/xera-ai/xera-sample-app-*`. You don't need to clone the sample-app repo — `bun run app:up` is enough.
 
 ```bash
-bun run app:up             # pull images + start backend (3000) + frontend (5173)
+bun run app:up             # pull images + start backend (3100) + frontend (5273)
 bun run app:wait-healthy   # block until backend /health returns 200
 bun run app:logs           # tail logs
 bun run app:down           # stop + remove
 ```
 
-Defaults match [`xera.config.ts`](./xera.config.ts) (`web: 5173`, `api: 3000`). If those ports are taken, override and update the config to match:
+Defaults are **`backend: 3100`** and **`frontend: 5273`** — intentionally non-default to avoid colliding with a locally-developed sample-app on the usual `3000` / `5173`. [`xera.config.ts`](./xera.config.ts) is wired to these ports.
+
+If you need to change them:
 
 ```bash
-BACKEND_PORT=3100 FRONTEND_PORT=5273 bun run app:up
-# then point xera.config.ts.web.baseUrl.staging at http://localhost:5273
+BACKEND_PORT=3200 FRONTEND_PORT=5373 bun run app:up
+# then mirror the new ports in xera.config.ts.{web,http}.baseUrl.staging
 # (xera:exec ignores XERA_BASE_URL, so the config must reflect the actual port)
 ```
 
